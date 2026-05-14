@@ -60,8 +60,8 @@ class OwnerController {
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable(name = "ownerId", required = false) Integer ownerId) {
-		return ownerId == null ? new Owner() : this.owners.findById(ownerId)
-			.orElseThrow(() -> ownerNotFoundException(ownerId));
+		return ownerId == null ? new Owner()
+				: this.owners.findById(ownerId).orElseThrow(() -> ownerNotFoundException(ownerId));
 	}
 
 	@GetMapping("/owners/new")
@@ -70,8 +70,7 @@ class OwnerController {
 	}
 
 	@PostMapping("/owners/new")
-	public String processCreationForm(@Valid Owner owner, BindingResult result,
-			RedirectAttributes redirectAttributes) {
+	public String processCreationForm(@Valid Owner owner, BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("error", "There was an error in creating the owner.");
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -87,8 +86,8 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners")
-	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner,
-			BindingResult result, Model model) {
+	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,
+			Model model) {
 		String lastName = owner.getLastName();
 		if (lastName == null) {
 			lastName = "";
@@ -126,8 +125,8 @@ class OwnerController {
 	}
 
 	@PostMapping("/owners/{ownerId}/edit")
-	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
-			@PathVariable("ownerId") int ownerId, RedirectAttributes redirectAttributes) {
+	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") int ownerId,
+			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("error", "There was an error in updating the owner.");
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -145,7 +144,6 @@ class OwnerController {
 
 	/**
 	 * Custom handler for displaying an owner.
-	 *
 	 * @param ownerId the ID of the owner to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
@@ -160,12 +158,11 @@ class OwnerController {
 
 	/**
 	 * Builds a PetClinicException for an owner that was not found.
-	 *
 	 * @param ownerId the owner ID that was looked up
 	 * @return a PetClinicException with a descriptive message
 	 */
 	private PetClinicException ownerNotFoundException(int ownerId) {
-		return new PetClinicException(
-				"Owner not found with id: " + ownerId + ". Please ensure the ID is correct.");
+		return new PetClinicException("Owner not found with id: " + ownerId + ". Please ensure the ID is correct.");
 	}
+
 }
