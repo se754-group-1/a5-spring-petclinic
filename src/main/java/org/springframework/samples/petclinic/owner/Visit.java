@@ -53,10 +53,6 @@ public class Visit extends BaseEntity {
 		return this.date;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
